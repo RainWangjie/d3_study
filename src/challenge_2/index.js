@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import tsv from './data.tsv';
+import tsv from '../challenge_1/data.tsv';
 
 const city = 'New York';
 const width = 800;
@@ -27,44 +27,32 @@ d3.tsv(tsv).then(data => {
     .scaleTime()
     .domain(xExtent)
     .range([margin.left, width - margin.right]);
-  //      	const yExtent = d3.extent(data, d => d[city]);
+
   const yMax = d3.max(data, d => d[city]);
   const yScale = d3
     .scaleLinear()
     .domain([0, yMax])
     .range([height - margin.bottom, margin.top]);
 
-  const heightScale = d3
-    .scaleLinear()
-    .domain([0, yMax])
-    .range([0, height - margin.top - margin.bottom]);
+  // line data
+  const line = d3
+    .line()
+    .x(d => xScale(d.date))
+    .y(d => yScale(d[city]))
+    .curve(d3.curveCatmullRom);
 
-  // create the rectangles
+  // create the line
   svg
-    .selectAll('rect')
-    .data(data)
-    .enter()
-    .append('rect')
-    .attr('width', 2)
-    .attr('height', function(d) {
-      return heightScale(d[city]);
-    })
-    .attr('x', function(d) {
-      return xScale(d.date);
-    })
-    .attr('y', function(d) {
-      return yScale(d[city]);
-    })
-    .attr('fill', 'blue')
-    .attr('stroke', 'white');
+    .append('path')
+    .attr('d', line(data))
+    .attr('fill', 'none')
+    .attr('stroke', 'blue');
 
   const xAxis = d3
     .axisBottom()
     .scale(xScale)
-    //       	.tickFormat(d => d3.timeFormat('%b %Y')(d));
     .tickFormat(d3.timeFormat('%b %Y'));
   const yAxis = d3.axisLeft().scale(yScale);
-  ``;
 
   // 添加绑定X轴
   svg

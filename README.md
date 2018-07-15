@@ -57,10 +57,35 @@ d3.extent(data, d => d.date);
 
 ## Shape
 
-> Line(Path)
+> Line(Path，贝塞尔，)
+
+简化 SVG path 元素 code，例：`<path d="M10 10 H 90 V 90 H 10 L 10 10"/>`
 
 ```js
+// line data
+const line = d3
+  .line()
+  // x轴赋值
+  .x(d => xScale(d.date))
+  // y轴赋值
+  .y(d => yScale(d[city]))
+  // 非直线连接，贝塞尔曲线连接数据点
+  .curve(d3.curveCatmullRom);
 ```
+
+> Pie(arc)
+
+闭合的 path 形成扇形，多个 arc 组成圆型（饼图）
+
+```js
+const dataset = [30, 10, 43, 55, 13];
+const arc = d3
+  .arc()
+  .innerRadius(0)
+  .outerRadius(100);
+```
+
+## Transitons
 
 示例：
 
@@ -68,6 +93,11 @@ d3.extent(data, d => d.date);
 - [饼图](https://codesandbox.io/s/xokn5pn4j4)
 - [关系图](https://codesandbox.io/s/zr37vwyvo3)
 - [tree 图](https://codesandbox.io/s/6y77wp46vn)
+
+需加载 tsv or json 文件，codesandbox fetch 遇到点问题，暂放在工程内
+
+- challenge_1 : `yarn run challenge_1`，柱状图
+- challenge_2 : `yarn run challenge_2`，折线图
 
 ## Site
 
