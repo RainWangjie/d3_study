@@ -8,7 +8,7 @@ D3 (或者叫 D3.js )是一个基于 web 标准的 JavaScript 可视化库. D3 �
 
 ## API
 
-> select
+> select()
 
 ```js
 // 类 jq 选择器
@@ -16,7 +16,7 @@ const svg = d3.select('svg');
 svg.selectAll('.MyRect');
 ```
 
-> data
+> data()
 
 ```js
 // 绑定数据
@@ -35,7 +35,7 @@ svg
   .append('rect');
 ```
 
-> scale,axis
+> scale(),axis()
 
 ```js
 // 数据与图示比例关系；Y轴数据对应高度；[0,100] =>[0,500]
@@ -48,7 +48,7 @@ const yScale = d3
 const yAxis = d3.axisLeft().scale(yScale);
 ```
 
-> extent
+> extent()
 
 ```js
 // 对data有序化，返回[min,max],同d3.min,d3.max
@@ -83,6 +83,35 @@ const arc = d3
   .arc()
   .innerRadius(0)
   .outerRadius(100);
+```
+
+## Update and Exit
+
+> enter(),update(),exit(),merge()
+
+对 select 的 element（selection）进行  操作，
+
+[🌰](https://codesandbox.io/s/4q1j4pjnj9)
+
+```js
+const bars = svg.selectALl('rect').data(data, d => d);
+
+// 删除多余节点
+bars.exit().remove();
+
+const enter = bars
+  .enter()
+  .append('rect')
+  .attr('width', rectWidth)
+  .attr('stroke', '#fff');
+
+// 合并2个selection
+bars = enter
+  .merge(bars)
+  .attr('x', (d, i) => i * rectWidth)
+  .attr('y', d => height - d)
+  .attr('height', d => d)
+  .attr('fill', d => colors(d));
 ```
 
 ## Transitons
