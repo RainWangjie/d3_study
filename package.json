@@ -1,0 +1,15 @@
+{
+    "name": "d3_study",
+    "version": "1.0.0",
+    "description": "d3",
+    "main": "index.html",
+    "scripts": {
+        "challenge_1": "parcel src/challenge_1/index.html --open"
+    },
+    "dependencies": {
+        "d3": "^5.5.0"
+    },
+    "devDependencies": {
+        "parcel-bundler": "^1.6.1"
+    }
+}
