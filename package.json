@@ -5,7 +5,8 @@
     "main": "index.html",
     "scripts": {
         "challenge_1": "parcel src/challenge_1/index.html --open",
-        "challenge_2": "parcel src/challenge_2/index.html --open"
+        "challenge_2": "parcel src/challenge_2/index.html --open",
+        "challenge_3": "parcel src/challenge_3/index.html --open"
     },
     "dependencies": {
         "d3": "^5.5.0"
