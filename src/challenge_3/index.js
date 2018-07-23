@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import csv from './barleyfull.csv';
-// properties
+
+// svg基础属性
 const radius = 10;
 const duration = 1500;
 const width = 800;
@@ -10,24 +11,32 @@ const svg = d3
   .append('svg')
   .attr('width', width)
   .attr('height', height);
-
 const g = svg.append('g').attr('transform', `translate(${radius},0)`);
-// scales
+
+// 坐标系
 const xScale = d3.scaleBand().rangeRound([0, width]);
 const yScale = d3.scaleLinear().range([height, 0]);
+
+// 随机颜色
 const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+// 过渡动画
 const t = d3.transition().duration(1000);
+
+// 更新函数
 function update(data, year) {
   const _data = data.filter(d => d.year === year);
 
   let circles = g.selectAll('circle').data(_data, d => d.key);
 
+  // 移除历史circle
   circles
     .exit()
     .transition(t)
     .attr('r', 0)
     .remove();
 
+  // 添加新circle
   circles
     .enter()
     .append('circle')
@@ -58,7 +67,7 @@ d3.csv(csv).then(response => {
   const startYear = 1927;
   const numYears = 9;
   let index = 0;
-  //   update(response, startYear);
+
   setInterval(() => {
     update(response, startYear + (index % numYears));
     index += 1;
